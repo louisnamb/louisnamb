@@ -1,66 +1,87 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-int		ft_strlen(char *str)
+#include "libft.h"
+
+size_t	ft_strlen(const char *s)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
-		i++;
+	while (s[i])
+        	i++;
 	return (i);
 }
 
-char up2del(char *s, int beg, int fin)
+int	num_arrs(const char *str, char c)
 {
-    int i;
-    char *str;
-    
-    i = 0;
-    if (!str = malloc(sizeof(char) * fin + 1));
-    while (s[i] && i < fin)
-    {
-        str[i] = s[i];
-        i++;
-    }
+	int i;
 
-    return (str);
+	i = 0;
+	while (*str)
+	{
+        	if (*str == c)
+            		i++;
+        	str++;
+	}
+	return (i + 1);
 }
 
-char **ft_split(char const *str, char c)
+char	*up2del(const char *s, int beg, int fin)
 {
-    char **split;
-    char *sub_split;
-    int j;
-    int boolean1;
-    int i;
+	char	*str;
+	int	i;
 
-    j = 0;
-    i = 0;
-    boolean1 = 0;
-    if (!str || !(sub_split = (char *)malloc(sizeof(char) * (up2del(str, c) + 1))))
-        return (NULL);
-    while (i < ft_strlen(str))
-    {
-        if (str[i] != c && boolean1 == 0)
-        {
-            boolean1 = 1
-        }
-        else if ((str[i] == c || i == ft_strlen(str)) && boolean1 != 0)
-        {
-            split[j] = up2del(str, boolean1 ,i);
-            j++;
-            boolean1 = 0;
-        }
-        i++;
-    }
-    return (split);
+	i = 0;
+	str = malloc(sizeof(char) * (fin - beg  + 1));
+	while (beg < fin)
+        	str[i++] = (char)s[beg++];
+	str[i] = '\0';
+	return (str);
 }
 
-int main()
+char	**ft_split(char const *s, char c)
 {
-    char *p = "heefgrd";
-    char j = 'f';
-    printf("ft: %s", ft_split(p, j)[0]);
+	char	**split;
+	size_t	j;
+	int	boolean;
+	size_t	i;
+
+	j = 0;
+	i = 0;
+	boolean = 0;
+	if (!s || !(split = malloc(sizeof(char *) * (num_arrs(s, c) + 1))))
+		return (0);
+	while (i <= ft_strlen((char *)s))
+	{
+		if (s[i] != c && boolean < 0)
+			boolean = i;
+		else if ((s[i] == c || i == ft_strlen((char *)s)) && boolean >= 0)
+		{
+			split[j++] = up2del(s, boolean ,i);
+			boolean = -1;
+		}
+		i++;
+	}
+	split[j] = 0;
+	return (split);
+}
+/*int main()
+{
+    char *str = "afeafevftexvs";
+    char c = 'e';
+    int i = 0;
+    char **fun = ft_split(str, c);
+  //  char **them = ftplit(str, c);
+    while (fun[i])
+    {
+        printf("ft: %s\n", fun[i]);
+//        printf(" real: %s\n", them[i]);
+        i++;
+    }
+    /*
+    printf("0: %s\n", ft_split(str, c)[0]);
+    printf("1: %s\n", ft_split(str, c)[1]);
+    printf("2: %s\n", ft_split(str, c)[2]);*/
     return (0);
-}
+}*/

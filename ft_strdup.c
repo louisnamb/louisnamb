@@ -1,3 +1,5 @@
+#include "libft.h"
+
 char *ft_strdup(const char *s1)
 {
     char *s2;
@@ -10,7 +12,7 @@ char *ft_strdup(const char *s1)
         i++;
     s2 = (char *)malloc(sizeof(char) * (i + 1));
     if (!s2)
-        return (NULL);
+        return (0);
     while (s1[p])
     {
         s2[p] = s1[p];
